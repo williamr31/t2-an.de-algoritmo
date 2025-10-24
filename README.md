@@ -1,1 +1,1 @@
-# t2-an.de-algoritmo
+CREATE TABLE
