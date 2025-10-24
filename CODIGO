@@ -1,1 +1,59 @@
-CREATE TABLE
+import random
+
+# Función que genera una palabra de 4 letras usando chr()
+def generar_palabra():
+    palabra = ""
+    for i in range(4):
+        numero = random.randint(97, 122)  # número entre 97 y 122 (a-z)
+        letra = chr(numero)  # convierte el número en una letra
+        palabra += letra
+    return palabra
+
+# Función para crear una matriz cuadrada con palabras aleatorias
+def crear_matriz(tamano):
+    matriz = []
+    for i in range(tamano):
+        fila = []
+        for j in range(tamano):
+            fila.append(generar_palabra())
+        matriz.append(fila)
+    return matriz
+
+# Mostrar la matriz con corchetes y comas
+def mostrar_matriz(matriz):
+    for fila in matriz:
+        print(fila)
+
+# Función para contar palabras con vocal (divide y vencerás simple)
+def contar_palabras_vocal(matriz):
+    if len(matriz) == 0:
+        return 0
+    elif len(matriz) == 1:
+        return contar_vocales_fila(matriz[0])
+    else:
+        mitad = len(matriz) // 2
+        parte1 = matriz[:mitad]
+        parte2 = matriz[mitad:]
+        return contar_palabras_vocal(parte1) + contar_palabras_vocal(parte2)
+
+# Contar las palabras con vocal en una fila
+def contar_vocales_fila(fila):
+    vocales = "aeiou"
+    contador = 0
+    for palabra in fila:
+        for letra in palabra:
+            if letra in vocales:
+                contador += 1
+                break
+    return contador
+
+# PROGRAMA PRINCIPAL
+tamaño = int(input("Ingrese el tamaño de la matriz cuadrada: "))
+matriz = crear_matriz(tamaño)
+
+print("\nMATRIZ GENERADA:\n")
+mostrar_matriz(matriz)
+
+# Contar cuántas palabras tienen vocal
+total = contar_palabras_vocal(matriz)
+print("\nCantidad de palabras con al menos una vocal:", total)
